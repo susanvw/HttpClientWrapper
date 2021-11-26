@@ -6,7 +6,7 @@ namespace SvwDesign.HttpClientWrapper
 {
     public static class DefaultPackageModule
     {
-        public static void AddHttpClientWrapperServices(this IServiceCollection services, IConfiguration configuration)
+        public static void AddHttpClientWrapperModule(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions();
 
