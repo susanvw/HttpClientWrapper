@@ -13,7 +13,7 @@ namespace SvwDesign.HttpClientWrapper
             var section = configuration.GetSection(ServiceBaseOptions.ServiceBase);
             services.Configure<ServiceBaseOptions>(section);
 
-            services.AddSingleton<IHttpClientWrapper, HttpClientWrapper>(); 
+            services.AddSingleton<IHttpClientWrapper, HttpClientWrapper>();
         }
     }
 }
