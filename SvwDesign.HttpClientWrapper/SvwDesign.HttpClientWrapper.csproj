@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>5.0.0</Version>
+    <Version>5.1.13.1</Version>
     <Authors>Susan von Wielligh</Authors>
     <Company>SvwDesign</Company>
     <ApplicationIcon />
@@ -13,10 +13,6 @@
 
   <ItemGroup>
     <None Remove="15hwibll.wvx~" />
-    <None Include="profile_picture_icon_v1.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

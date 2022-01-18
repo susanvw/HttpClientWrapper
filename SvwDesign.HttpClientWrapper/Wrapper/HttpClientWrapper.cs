@@ -13,9 +13,9 @@ namespace SvwDesign.HttpClientWrapper
         private bool _disposed;
 
         private readonly HttpClient _httpClient;
-        private readonly IOptions<ServiceBaseOptions> _siteOptions;
+        private readonly IOptions<HttpClientWrapperOptions> _siteOptions;
 
-        public HttpClientWrapper(IOptions<ServiceBaseOptions> siteOptions)
+        public HttpClientWrapper(IOptions<HttpClientWrapperOptions> siteOptions)
         {
             _httpClient = new HttpClient();
             _siteOptions = siteOptions;
