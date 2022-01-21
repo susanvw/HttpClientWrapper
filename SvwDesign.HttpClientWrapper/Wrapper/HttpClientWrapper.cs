@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SvwDesign.HttpClientWrapper
+namespace SvwDesign.HttpClientWrapper.Wrapper
 {
 
     public class HttpClientWrapper : IHttpClientWrapper, IDisposable

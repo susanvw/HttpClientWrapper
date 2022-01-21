@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SvwDesign.HttpClientWrapper
+namespace SvwDesign.HttpClientWrapper.Services
 {
     public abstract class ServiceBase
     {

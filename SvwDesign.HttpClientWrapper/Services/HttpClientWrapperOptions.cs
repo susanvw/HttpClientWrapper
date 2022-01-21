@@ -1,4 +1,5 @@
-﻿namespace SvwDesign.HttpClientWrapper
+﻿
+namespace SvwDesign.HttpClientWrapper.Services
 {
     public class  HttpClientWrapperOptions
     {
