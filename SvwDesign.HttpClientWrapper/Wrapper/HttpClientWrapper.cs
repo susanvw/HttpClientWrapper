@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using SvwDesign.HttpClientWrapper.Services;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
