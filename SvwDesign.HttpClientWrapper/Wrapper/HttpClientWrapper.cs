@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Options;
-using SvwDesign.HttpClientWrapper.Services;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SvwDesign.HttpClientWrapper.Wrapper
+namespace SvwDesign.HttpClientWrapper
 {
 
     public class HttpClientWrapper : IHttpClientWrapper, IDisposable

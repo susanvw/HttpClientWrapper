@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace SvwDesign.HttpClientWrapper.Wrapper
+namespace SvwDesign.HttpClientWrapper
 {
     public interface IHttpClientWrapper
     {

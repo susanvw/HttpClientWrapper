@@ -1,9 +1,8 @@
-﻿using SvwDesign.HttpClientWrapper.Wrapper;
-using System;
+﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SvwDesign.HttpClientWrapper.Services
+namespace SvwDesign.HttpClientWrapper
 {
     public abstract class ServiceBase
     {

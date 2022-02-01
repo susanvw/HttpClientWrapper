@@ -13,6 +13,10 @@
 
   <ItemGroup>
     <None Remove="15hwibll.wvx~" />
+    <None Include="profile_picture_icon_v1.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
