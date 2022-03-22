@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SvwDesign.HttpClientWrapper
@@ -13,71 +14,65 @@ namespace SvwDesign.HttpClientWrapper
         private bool _disposed;
 
         private readonly HttpClient _httpClient;
-        private readonly IOptions<HttpClientWrapperOptions> _siteOptions;
 
-        public HttpClientWrapper(IOptions<HttpClientWrapperOptions> siteOptions)
+        public HttpClientWrapper()
         {
             _httpClient = new HttpClient();
-            _siteOptions = siteOptions;
         }
 
-        public async Task<HttpContent> GetAsync(string path)
+        public async Task<string> GetAsync(string path, CancellationToken cancellationToken = default)
         {
-            var request = GetRequest(path);
-            var response = await _httpClient.SendAsync(request);
-            return response.Content;
+            return await SendRequestAsync(HttpMethod.Get, path, cancellationToken);
         }
 
-        public async Task<HttpResponseMessage> PostAsync<T>(string path, T request)
+
+        public async Task<string> PostAsync<T>(string path, T content,  CancellationToken cancellationToken = default)
         {
-            var uri = new Uri($"{_siteOptions.Value.BaseAddress}/{path}");
-            var content = GetContent(request);
-            var response = await _httpClient.PostAsync(uri, content);
+            return await SendRequestAsync(HttpMethod.Post, content, path, cancellationToken);
+        }
+
+        public async Task<string> UpdateAsync<T>(string path, T content, CancellationToken cancellationToken = default)
+        {
+            return await SendRequestAsync(HttpMethod.Put, content, path, cancellationToken);
+        }
+
+        public async Task<string> DeleteAsync(string path, CancellationToken cancellationToken = default)
+        {
+            return await SendRequestAsync(HttpMethod.Delete, path, cancellationToken);
+        }
+
+
+        private async Task<string> SendRequestAsync(HttpMethod method, string path, CancellationToken cancellationToken)
+        {
+            var request = new HttpRequestMessage(method, path);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return response;
+            return await response.Content.ReadAsStringAsync(cancellationToken);
         }
 
-        public async Task<HttpResponseMessage> UpdateAsync<T>(string path, T request)
+
+        private async Task<string> SendRequestAsync<T>(HttpMethod method, T body,  string path, CancellationToken cancellationToken)
         {
-            var uri = new Uri($"{_siteOptions.Value.BaseAddress}/{path}");
-            var content = GetContent(request);
-            var response = await _httpClient.PutAsync(uri, content);
+            var request = new HttpRequestMessage(method, path);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8);
+            request.Content.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+
+            var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return response;
+            return await response.Content.ReadAsStringAsync(cancellationToken);
         }
 
-        public async Task<HttpResponseMessage> DeleteAsync(Uri requestUri)
-        {
-            var response = await _httpClient.DeleteAsync(requestUri);
-            return response;
-        }
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        private HttpRequestMessage GetRequest(string path)
-        {
-            var uri = new Uri($"{_siteOptions.Value.BaseAddress}{path}");
-            var request = new HttpRequestMessage
-            {
-                RequestUri = uri,
-                Method = HttpMethod.Get,
-            };
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(_siteOptions.Value.MediaType));
-
-            return request;
-        }
-        private HttpContent GetContent<T>(T request)
-        {
-            var content = new StringContent(JsonSerializer.Serialize(request));
-            content.Headers.ContentType = new MediaTypeHeaderValue(_siteOptions.Value.MediaType);
-            return content;
-        }
+        } 
 
         protected virtual void Dispose(bool disposing)
         {

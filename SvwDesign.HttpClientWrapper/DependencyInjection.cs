@@ -13,19 +13,20 @@ namespace SvwDesign.HttpClientWrapper
         {
             services.AddOptions();
 
-            var section = configuration.GetSection(HttpClientApiOptions.ConfigSection);
-            services.Configure<HttpClientApiOptions>(section);
+            var section = configuration.GetSection(HttpClientWrapperOptions.ConfigSection);
+            services.Configure<HttpClientWrapperOptions>(section); 
 
-            var baseAddres = section["BaseAddress"];
-
-            services.AddHttpClient<IHttpClientApi, HttpClientApi>(client =>
+            var baseAddres = section["BaseAddress"]; 
+            services.AddHttpClient<IHttpClientWrapper, HttpClientWrapper>(client =>
             {
                 client.BaseAddress = new Uri(baseAddres);
             })
-            .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+            .SetHandlerLifetime(TimeSpan.FromMinutes(15))
             .AddPolicyHandler(GetRetryPolicy())
             .AddPolicyHandler(GetCircuitBreakerPolicy());
+
         }
+
 
 
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()

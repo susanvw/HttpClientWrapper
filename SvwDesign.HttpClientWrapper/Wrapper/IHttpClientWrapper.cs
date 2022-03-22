@@ -1,17 +1,16 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace SvwDesign.HttpClientWrapper
 {
     public interface IHttpClientWrapper
     {
-       Task<HttpContent> GetAsync(string path);
+       Task<string> GetAsync(string path, CancellationToken cancellationToken = default);
 
-        Task<HttpResponseMessage> PostAsync<T>(string path, T Request);
+        Task<string> PostAsync<T>(string path, T content, CancellationToken cancellationToken = default);
 
-        Task<HttpResponseMessage> UpdateAsync<T>(string path, T Request);
+        Task<string> UpdateAsync<T>(string path, T content, CancellationToken cancellationToken = default);
 
-        Task<HttpResponseMessage> DeleteAsync(Uri requestUri);
+        Task<string> DeleteAsync(string path, CancellationToken cancellationToken = default);
     }
 }
