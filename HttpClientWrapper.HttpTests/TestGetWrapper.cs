@@ -19,7 +19,7 @@ namespace HttpClientWrapper.HttpTests
                    .Build();
 
             var Services = new ServiceCollection();
-            Services.AddHttpClientWrapperModule(config);
+            Services.AddSvwDesignHttpClientWrapper(config);
 
             // Build the intermediate service provider
             var sp = Services.BuildServiceProvider();
