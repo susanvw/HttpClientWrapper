@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
 	  <Nullable>enable</Nullable>
-    <Version>5.2.0</Version>
+    <Version>5.2.1</Version>
     <Authors>Susan von Wielligh</Authors>
     <Company>SvwDesign</Company>
     <ApplicationIcon />
